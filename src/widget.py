@@ -26,6 +26,3 @@ def get_date(date_string: str) -> str:
     """Функция возвращает дату в формате "ДД.ММ.ГГГГ"."""
     date = date_string[:10].split("-")
     return ".".join(reversed(date))
-
-
-print(get_mask_account_card("Maestro 7000792289606361"))
