@@ -20,5 +20,5 @@ def test_mask_account_card(card_number: str, mask_account: str) -> None:
                                                ('30-05-2020', '30.05.2020'),
                                                ('', 'Не верный формат даты'),
                                                ('2024-03', 'Не верный формат даты')])
-def test_get_date(date:str, format_date: str) -> None:
+def test_get_date(date: str, format_date: str) -> None:
     assert get_date(date) == format_date
