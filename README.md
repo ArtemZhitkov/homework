@@ -34,6 +34,12 @@ https://github.com/ArtemZhitkov/homework.git
 ```
 poetry install
 ```
+## Тестирование
+* Добавлены тесты модуля masks 
+* Добавлены тесты модуля widget
+* Добавлены тесты модуля processing
+
+Покрытие тестами 100%
 
 
 ## Использование:
