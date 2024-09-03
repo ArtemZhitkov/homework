@@ -1,7 +1,7 @@
 from src.masks import get_mask_account, get_mask_card_number
 
 
-def mask_account_card(card_number: str) -> str:
+def mask_account_card(card_number: str) -> str | None:
     """Функция принимает один аргумент — строку, содержащую тип и номер карты или счета,
     возвращает строку с замаскированным номером.
     Для карт и счетов используйте разные типы маскировки"""
@@ -18,11 +18,18 @@ def mask_account_card(card_number: str) -> str:
 
     if len(account_number) == 20:
         return f"{card_name}{get_mask_account(account_number)}"
-    else:
+    elif len(account_number) == 16:
         return f"{card_name}{get_mask_card_number(account_number)}"
+    else:
+        return None
 
 
 def get_date(date_string: str) -> str:
     """Функция возвращает дату в формате "ДД.ММ.ГГГГ"."""
-    date = date_string[:10].split("-")
-    return ".".join(reversed(date))
+    if len(date_string) >= 10:
+        date = date_string[:10].split("-")
+        if len(date[0]) == 2:
+            return ".".join(date)
+        else:
+            return ".".join(reversed(date))
+    return "Не верный формат даты"
