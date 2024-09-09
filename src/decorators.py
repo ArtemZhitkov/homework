@@ -12,20 +12,18 @@ def log(filename: Optional[str] = None) -> Callable:
         @wraps(func)
         def wrapper(*args: Any, **kwargs: Any) -> Any:
             try:
-                start = f"{func.__name__} start"
                 result = func(*args, **kwargs)
-                stop = f"{func.__name__} stop"
                 if filename:
                     with open(filename, "a", encoding="utf-8") as file:
-                        file.write(f"{func.__name__} - {start}\n{func.__name__} - ok\n" f"{func.__name__} - {stop}.\n")
+                        file.write(f"{func.__name__} - ok\n")
                 else:
-                    print(f"{func.__name__} start - {start} \n{func.__name__} - ok \n{func.__name__} stop - {stop}")
+                    print(f"{func.__name__} - ok")
             except Exception as error:
                 if filename:
                     with open(filename, "a", encoding="utf-8") as file:
-                        file.write(f"{func.__name__} error: {error} with args: {args} and kwargs: {kwargs}.\n")
+                        file.write(f"{func.__name__} error: {error} Inputs: {args}, {kwargs}\n")
                 else:
-                    print(f"{func.__name__} error: {error} with args: {args} and kwargs: {kwargs}")
+                    print(f"{func.__name__} error: {error} Inputs: {args}, {kwargs}")
                 raise
 
             return result
