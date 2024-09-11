@@ -1,0 +1,2 @@
+function_file_success - ok
+function_file_error error: Test error Inputs: (1, 2), {}

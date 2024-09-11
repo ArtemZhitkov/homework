@@ -1,0 +1,2 @@
+my_function - ok
+my_function error: my_function() missing 1 required positional argument: 'y' Inputs: (1,), {}
