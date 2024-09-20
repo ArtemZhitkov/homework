@@ -23,4 +23,4 @@ def currency_conversion_in_rub(transaction: Dict) -> float | Any:
     response = requests.get(url, headers=headers)
 
     result = response.json()
-    return result["result"]
+    return float(result["result"])

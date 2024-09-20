@@ -15,14 +15,17 @@ def get_data_from_json(path: str) -> List[dict] | Any:
         with open(path, encoding="utf-8") as data_file:
             try:
                 transactions = json.load(data_file)
-                return transactions
+                if type(transactions) is list:
+                    return transactions
+                else:
+                    return []
             except json.JSONDecodeError:
                 return []
     except FileNotFoundError:
         return []
 
 
-def get_amount_in_rub(transaction: dict, currency: str = "RUB") -> float | Any:
+def get_amount_in_rub(transaction: dict, currency: str = "RUB"):
     """Функция, которая принимает на вход транзакцию и возвращает сумму транзакции (amount) в рублях.
     Если транзакция была в USD или EUR,
     происходит обращение к внешнему API для получения текущего курса валют и
@@ -30,7 +33,7 @@ def get_amount_in_rub(transaction: dict, currency: str = "RUB") -> float | Any:
 
     try:
         if transaction["operationAmount"]["currency"]["code"] == currency:
-            return transaction.get("operationAmount").get("amount")
+            return float(transaction.get("operationAmount").get("amount"))
         elif transaction["operationAmount"]["currency"]["code"] == "USD":
             return currency_conversion_in_rub(transaction)
         elif transaction["operationAmount"]["currency"]["code"] == "EUR":
