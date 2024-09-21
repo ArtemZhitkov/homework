@@ -1,4 +1,5 @@
 from unittest.mock import patch
+
 from src.external_api import currency_conversion_in_rub
 
 
