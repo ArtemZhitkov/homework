@@ -126,3 +126,16 @@ def transaction_in_usd():
             "from": "Счет 19708645243227258542",
             "to": "Счет 75651667383060284188"
         }
+
+
+@pytest.fixture
+def transaction_in_eur():
+    return {
+        "operationAmount": {
+                "amount": "4.70",
+                "currency": {
+                    "name": "EUR.",
+                    "code": "EUR"
+                }
+        }
+    }

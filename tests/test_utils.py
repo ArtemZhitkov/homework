@@ -40,6 +40,15 @@ def test_get_amount_not_rub(transaction_in_usd: dict) -> None:
     mock_conversion.assert_called()
 
 
+def test_get_amount_not_rub_from_eur(
+    transaction_in_eur: dict,
+) -> None:
+    mock_conversion = Mock(return_value=4.70)
+    get_amount_in_rub = mock_conversion
+    assert get_amount_in_rub(transaction_in_eur) == 4.70
+    mock_conversion.assert_called()
+
+
 def test_get_amount_in_rub(transaction_in_rub: dict) -> None:
     assert get_amount_in_rub(transaction_in_rub) == 43318.34
 

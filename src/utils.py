@@ -15,7 +15,7 @@ def get_data_from_json(path: str) -> List[dict] | Any:
         with open(path, encoding="utf-8") as data_file:
             try:
                 transactions = json.load(data_file)
-                if type(transactions) is list:
+                if isinstance(transactions, list):
                     return transactions
                 else:
                     return []
@@ -33,7 +33,7 @@ def get_amount_in_rub(transaction: dict) -> float | str:
 
     try:
         if transaction["operationAmount"]["currency"]["code"] == "RUB":
-            return float(transaction["operationAmount"]["currency"]["code"])
+            return float(transaction["operationAmount"]["amount"])
         else:
             return currency_conversion_in_rub(transaction)
     except KeyError:
