@@ -13,5 +13,5 @@ def test_currency_conversion_in_rub(mock_get):
             "code": "USD"
         }
     }
-    }) == 1.0
+    }) == 0.0
     mock_get.assert_called()

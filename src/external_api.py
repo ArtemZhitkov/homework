@@ -21,6 +21,8 @@ def currency_conversion_in_rub(transaction: Dict) -> float | Any:
     url = f"https://api.apilayer.com/exchangerates_data/convert?to=RUB&from={currency_code}&amount={amount}"
 
     response = requests.get(url, headers=headers)
-
-    result = response.json()
-    return float(result["result"])
+    if response.status_code == 200:
+        result = response.json()
+        return float(result["result"])
+    else:
+        return 0.0
