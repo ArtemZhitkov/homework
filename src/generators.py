@@ -3,8 +3,8 @@ from typing import Iterator, List
 
 def filter_by_currency(transactions_list: List[dict], currency: str) -> Iterator[dict]:
     """Функция, которая принимает на вход список словарей, представляющих транзакции.
-        Функция возвращает итератор, который поочередно выдает транзакции,
-        где валюта операции соответствует заданной (например, USD)."""
+    Функция возвращает итератор, который поочередно выдает транзакции,
+    где валюта операции соответствует заданной (например, USD)."""
     for transaction in transactions_list:
         if transaction["operationAmount"]["currency"]["code"] == currency:
             yield transaction
@@ -25,4 +25,4 @@ def card_number_generator(start: int, stop: int) -> Iterator[str]:
         card_number = str(number)
         while len(card_number) < 16:
             card_number = "0" + card_number
-        yield f'{card_number[:4]} {card_number[4:8]} {card_number[8:12]} {card_number[12:]}'
+        yield f"{card_number[:4]} {card_number[4:8]} {card_number[8:12]} {card_number[12:]}"
