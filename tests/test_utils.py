@@ -40,13 +40,10 @@ def test_get_amount_not_rub(transaction_in_usd: dict) -> None:
     mock_conversion.assert_called()
 
 
-def test_get_amount_not_rub_from_eur(
-    transaction_in_eur: dict,
-) -> None:
-    mock_conversion = Mock(return_value=4.70)
-    get_amount_in_rub = mock_conversion
-    assert get_amount_in_rub(transaction_in_eur) == 4.70
-    mock_conversion.assert_called()
+@patch("src.utils.get_amount_in_rub")
+def test_get_amount_not_rub1(mock: MagicMock, transaction_data_1: dict) -> None:
+    mock.return_value = 0.0
+    assert get_amount_in_rub(transaction_data_1) == 0.0
 
 
 def test_get_amount_in_rub(transaction_in_rub: dict) -> None:
