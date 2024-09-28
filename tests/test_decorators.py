@@ -41,14 +41,14 @@ def test_log_to_file() -> None:
 
     function_file_success(1, 2)
 
-    with open("test_log.txt", 'r') as file:
+    with open("test_log.txt", "r") as file:
         log_content = file.read()
 
         assert "function_file_success - ok\n" in log_content
         with pytest.raises(Exception):
             function_file_error(1, 2)
 
-        with open("test_log.txt", 'r') as f:
+        with open("test_log.txt", "r") as f:
             log_content = f.read()
 
             assert "function_file_error error: Test error Inputs: (1, 2), {}\n" in log_content
