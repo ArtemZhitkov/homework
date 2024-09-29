@@ -17,7 +17,7 @@ def greeting() -> list:
 2. Получить информацию о транзакциях из CSV-файла
 3. Получить информацию о транзакциях из XLSX-файла"""
     )
-    user_input = input()
+    user_input = input("Введите номер пункта меню: ")
     while True:
         if user_input == "1":
             print("Для обработки выбран JSON-файл.")
@@ -29,12 +29,7 @@ def greeting() -> list:
             print("Для обработки выбран EXCEL-файл.")
             return read_from_excel(PATH_TO_EXCEL)
         else:
-            print(
-                """Выберите необходимый пункт меню:
-            1. Получить информацию о транзакциях из JSON-файла
-            2. Получить информацию о транзакциях из CSV-файла
-            3. Получить информацию о транзакциях из XLSX-файла"""
-            )
+            print("Пожалуйста, введите число от 1 до 3.")
             user_input = input()
 
 
@@ -101,11 +96,10 @@ def output_result(transactions: list) -> None:
 
     if transactions:
         print("Программа: Распечатываю итоговый список транзакций...")
-        sleep(2)
+        sleep(1)
         print(f"Всего банковских операций в выборке: {len(transactions)}")
-        sleep(2)
+        sleep(1)
         for transaction in transactions:
-            sleep(0.5)
             date = get_date(transaction.get("date"))
             description = transaction.get("description")
             mask_to = mask_account_card(transaction.get("to"))
@@ -124,10 +118,14 @@ def output_result(transactions: list) -> None:
         print("Не найдено ни одной транзакции, подходящей под ваши условия фильтрации")
 
 
-if __name__ == "__main__":
+def main() -> None:
     start = greeting()
     status = choice_status(start)
     sorting = sorting_by_date(status)
     currency = only_rub(sorting)
     filtered_transactions = sorting_by_word(currency)
     output_result(filtered_transactions)
+
+
+if __name__ == "__main__":
+    main()

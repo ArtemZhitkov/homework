@@ -1,5 +1,6 @@
 import logging
 import os
+from typing import Any
 
 import pandas as pd
 
@@ -18,7 +19,7 @@ PATH_TO_CSV = os.path.join(os.path.dirname(__file__), "..", "data", "transaction
 PATH_TO_EXCEL = os.path.join(os.path.dirname(__file__), "..", "data", "transactions_excel.xlsx")
 
 
-def read_from_csv(path: str, sep: str = ";") -> list:
+def read_from_csv(path: str, sep: str = ";") -> list[dict[Any, Any]]:
     """Функция, которая принимает на вход путь к файлу с транзакциями в формате .csv и возвращает
     список словарей с транзакциями"""
     try:
@@ -27,16 +28,16 @@ def read_from_csv(path: str, sep: str = ";") -> list:
         transactions = df.to_dict(orient="records")
         result = []
         for transaction in transactions:
-            transaction_dict = {"id": "", "state": "", "date": "",
-                                "operationAmount": {"amount": "",
-                                                    "currency": {
-                                                        "name": "",
-                                                        "code": ""}
-                                                    },
-                                "description": "",
-                                "from": "",
-                                "to": ""
-                                }
+            transaction_dict: dict[Any, Any] = {"id": "", "state": "", "date": "",
+                                                "operationAmount": {"amount": "",
+                                                                    "currency": {
+                                                                        "name": "",
+                                                                        "code": ""}
+                                                                    },
+                                                "description": "",
+                                                "from": "",
+                                                "to": ""
+                                                }
             for key, value in transaction.items():
                 if key == "amount":
                     transaction_dict["operationAmount"]["amount"] = value
@@ -65,20 +66,19 @@ def read_from_excel(path: str, sheet_name: int = 0) -> list:
     try:
         logger.info(f"Чтение файла {path}")
         df = pd.read_excel(path, sheet_name=sheet_name)
-        logger.info("Возврат списка словарей с транзакциями")
         transactions = df.to_dict(orient="records")
         result = []
         for transaction in transactions:
-            transaction_dict = {"id": "", "state": "", "date": "",
-                                "operationAmount": {"amount": "",
-                                                    "currency": {
-                                                        "name": "",
-                                                        "code": ""}
-                                                    },
-                                "description": "",
-                                "from": "",
-                                "to": ""
-                                }
+            transaction_dict: dict[Any, Any] = {"id": "", "state": "", "date": "",
+                                                "operationAmount": {"amount": "",
+                                                                    "currency": {
+                                                                        "name": "",
+                                                                        "code": ""}
+                                                                    },
+                                                "description": "",
+                                                "from": "",
+                                                "to": ""
+                                                }
             for key, value in transaction.items():
                 if key == "amount":
                     transaction_dict["operationAmount"]["amount"] = value
@@ -89,7 +89,7 @@ def read_from_excel(path: str, sheet_name: int = 0) -> list:
                 else:
                     transaction_dict[key] = value
             result.append(transaction_dict)
-
+        logger.info("Возврат списка словарей с транзакциями")
         return result
 
     except pd.errors.EmptyDataError:
