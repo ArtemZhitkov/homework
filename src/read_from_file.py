@@ -24,8 +24,32 @@ def read_from_csv(path: str, sep: str = ";") -> list:
     try:
         logger.info(f"Чтение файла {path}")
         df = pd.read_csv(path, sep=sep)
+        transactions = df.to_dict(orient="records")
+        result = []
+        for transaction in transactions:
+            transaction_dict = {"id": "", "state": "", "date": "",
+                                "operationAmount": {"amount": "",
+                                                    "currency": {
+                                                        "name": "",
+                                                        "code": ""}
+                                                    },
+                                "description": "",
+                                "from": "",
+                                "to": ""
+                                }
+            for key, value in transaction.items():
+                if key == "amount":
+                    transaction_dict["operationAmount"]["amount"] = value
+                elif key == "currency_name":
+                    transaction_dict["operationAmount"]["currency"]["name"] = value
+                elif key == "currency_code":
+                    transaction_dict["operationAmount"]["currency"]["code"] = value
+                else:
+                    transaction_dict[key] = value
+            result.append(transaction_dict)
+
         logger.info("Возврат списка словарей с транзакциями")
-        return df.to_dict(orient="records")
+        return result
 
     except pd.errors.EmptyDataError:
         logger.warning(f"Ошибка: Файл {path} пустой.")
@@ -42,7 +66,31 @@ def read_from_excel(path: str, sheet_name: int = 0) -> list:
         logger.info(f"Чтение файла {path}")
         df = pd.read_excel(path, sheet_name=sheet_name)
         logger.info("Возврат списка словарей с транзакциями")
-        return df.to_dict(orient="records")
+        transactions = df.to_dict(orient="records")
+        result = []
+        for transaction in transactions:
+            transaction_dict = {"id": "", "state": "", "date": "",
+                                "operationAmount": {"amount": "",
+                                                    "currency": {
+                                                        "name": "",
+                                                        "code": ""}
+                                                    },
+                                "description": "",
+                                "from": "",
+                                "to": ""
+                                }
+            for key, value in transaction.items():
+                if key == "amount":
+                    transaction_dict["operationAmount"]["amount"] = value
+                elif key == "currency_name":
+                    transaction_dict["operationAmount"]["currency"]["name"] = value
+                elif key == "currency_code":
+                    transaction_dict["operationAmount"]["currency"]["code"] = value
+                else:
+                    transaction_dict[key] = value
+            result.append(transaction_dict)
+
+        return result
 
     except pd.errors.EmptyDataError:
         logger.warning(f"Ошибка: Лист {sheet_name} в файле {path} пустой.")
