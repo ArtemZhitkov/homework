@@ -2,7 +2,7 @@ from time import sleep
 
 from src.processing import filter_by_state, search_by_pattern, sort_by_date
 from src.read_from_file import PATH_TO_CSV, PATH_TO_EXCEL, read_from_csv, read_from_excel
-from src.utils import PATH_TO_FILE, get_amount_in_rub, get_data_from_json
+from src.utils import PATH_TO_FILE, get_data_from_json
 from src.widget import get_date, mask_account_card
 
 
@@ -78,7 +78,8 @@ def only_rub(transactions: list) -> list:
     if choice_currency in ["да", "yes", "lf"]:
         result = []
         for transaction in transactions:
-            result.append(get_amount_in_rub(transaction))
+            if transaction["operationAmount"]["currency"]["code"] == "RUB":
+                result.append(transaction)
         return result
     else:
         return transactions
